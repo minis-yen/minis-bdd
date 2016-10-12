@@ -1,10 +1,10 @@
-package net.minis.bdd.login.case001;
+package net.minis.bdd.sit;
 
 import org.junit.runner.RunWith;
 
 import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
-public class _TestCase001 {
+public class _TestCaseRunner {
 
 }
