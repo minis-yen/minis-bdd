@@ -23,7 +23,7 @@ unzip to "D:\Selenium\" folder.
 ## Get Started.
 
 ### Import project.  
-this project is maven project. suppott eclipse or IntelliJ IDEA's import.
+this project is maven project. support eclipse or IntelliJ IDEA's import.
 
 ### Run and Test.  
 execute unit test "_TestCaseRunner.java" 
