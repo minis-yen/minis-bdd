@@ -14,20 +14,15 @@ public class LoginProcess {
 
 	public LoginProcess(WebDriver driver) {
 		this.driver = driver;
-		init();
+		this.driver.manage().window();
 	}
 
-	public void init() {
-		driver.manage().window();
-	}
-
-	public void doLogin(String url) throws Exception {
+	public void doEnterPage(String url) throws Exception {
+		driver.get(url);
 		Thread.sleep(3000);
 	}
 
-	public void doLogin(String url, String username, String password) throws Exception {
-
-		driver.get(url);
+	public void doLogin(String username, String password) throws Exception {
 
 		driver.findElement(By.id("username")).clear();
 		driver.findElement(By.id("password")).clear();
@@ -41,9 +36,10 @@ public class LoginProcess {
 
 	public void doLogout(String url) throws Exception {
 		driver.get(url);
+		Thread.sleep(3000);
 	}
 
-	public void close() {
+	public void close() throws Exception {
 		driver.close();
 		driver.quit();
 	}

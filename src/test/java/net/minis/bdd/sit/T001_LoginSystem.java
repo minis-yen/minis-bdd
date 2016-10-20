@@ -9,25 +9,26 @@ import net.minis.bdd.login.LoginProcess;
 
 public class T001_LoginSystem implements Constants {
 
-    LoginProcess login = new LoginProcess(WebDriverFactory.create());
-  
-    @Given("Login > " + PARAMS_KEY + ", username: " + PARAMS_KEY + ", password: " + PARAMS_KEY)
-    public void login(String url, String username, String password) throws Exception {
-        login.doLogin(url, username, password);
-    }
+	LoginProcess loginProcess = new LoginProcess(WebDriverFactory.create());
 
-    @When("^Change to LogIn Page$")
-    public void navigateLogInPage() throws Throwable {
-    }
+	@Given("^進入系統 > \"([^\"]*)\" 登入頁面$")
+	public void 進入系統_登入頁面(String url) throws Throwable {
+		loginProcess.doEnterPage(url);
+	}
 
-    @When("^Enters Username and Password$")
-    public void enterUsernameAndPassword() throws Throwable {
-    }
+	@When("^輸入使用者帳號: \"([^\"]*)\", 密碼: \"([^\"]*)\", 點選確定登入$")
+	public void 輸入使用者帳號_密碼_點選確定登入(String username, String password) throws Throwable {
+		loginProcess.doLogin(username, password);
+	}
 
-    @Then("Logout > " + PARAMS_KEY)
-    public void logout(String url) throws Exception {
-        login.doLogout(url);
-        login.close();
-    }
+	@Then("^系統登入後將進入主頁面$")
+	public void 系統登入後將進入主頁面() throws Throwable {
+	}
+
+	@Then("^登出系統 > \"([^\"]*)\"$")
+	public void 登出系統(String url) throws Throwable {
+		loginProcess.doLogout(url);
+		loginProcess.close();
+	}
 
 }

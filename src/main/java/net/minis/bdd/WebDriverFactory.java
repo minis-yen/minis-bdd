@@ -11,7 +11,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 public class WebDriverFactory {
 
 	public static WebDriver create() {
-		return createFireFox();
+		return createChrome();
 	}
 
 	public static WebDriver createFireFox() {
