@@ -9,7 +9,7 @@ import net.minis.bdd.login.LoginProcess;
 
 public class T001_LoginSystem implements Constants {
 
-	LoginProcess loginProcess = new LoginProcess(WebDriverFactory.create());
+	LoginProcess loginProcess = new LoginProcess(WebDriverFactory.getCurrentDriver());
 
 	@Given("^進入系統 > \"([^\"]*)\" 登入頁面$")
 	public void 進入系統_登入頁面(String url) throws Throwable {
