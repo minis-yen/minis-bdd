@@ -26,7 +26,7 @@ public class WebDriverFactory {
 
 	public static WebDriver createFireFox() {
 
-		final File file = new File("D:/Selenium/geckodriver.exe");
+		final File file = new File("./driver/geckodriver.exe");
 		System.setProperty("webdriver.gecko.driver", file.getAbsolutePath());
 
 		return new FirefoxDriver();
@@ -34,7 +34,7 @@ public class WebDriverFactory {
 
 	public static WebDriver createChrome() {
 
-		final File file = new File("D:/Selenium/chromedriver.exe");
+		final File file = new File("./driver/chromedriver.exe");
 		System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
 
 		ChromeOptions options = new ChromeOptions();
@@ -45,7 +45,7 @@ public class WebDriverFactory {
 
 	public static WebDriver createIE() {
 
-		final File file = new File("D:/Selenium/IEDriverServer.exe");
+		final File file = new File("./driver/IEDriverServer.exe");
 		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
 
 		return new InternetExplorerDriver();
