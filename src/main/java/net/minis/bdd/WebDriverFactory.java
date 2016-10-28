@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.UnreachableBrowserException;
 
 public class WebDriverFactory {
 
@@ -15,16 +14,24 @@ public class WebDriverFactory {
 
 	public static WebDriver getCurrentDriver() {
 		if (currentDriver == null) {
-			try {
-				currentDriver = createChrome();
-			} finally {
-				Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
+			synchronized (WebDriverFactory.class) {
+				if (currentDriver == null) {
+					createDriver();
+				}
 			}
 		}
 		return currentDriver;
 	}
 
-	public static WebDriver createFireFox() {
+	static void createDriver() {
+		try {
+			currentDriver = createChrome();
+		} finally {
+			Runtime.getRuntime().addShutdownHook(new Thread(new BrowserCleanup()));
+		}
+	}
+
+	static WebDriver createFireFox() {
 
 		final File file = new File("./driver/geckodriver.exe");
 		System.setProperty("webdriver.gecko.driver", file.getAbsolutePath());
@@ -32,7 +39,7 @@ public class WebDriverFactory {
 		return new FirefoxDriver();
 	}
 
-	public static WebDriver createChrome() {
+	static WebDriver createChrome() {
 
 		final File file = new File("./driver/chromedriver.exe");
 		System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
@@ -43,7 +50,7 @@ public class WebDriverFactory {
 		return new ChromeDriver(options);
 	}
 
-	public static WebDriver createIE() {
+	static WebDriver createIE() {
 
 		final File file = new File("./driver/IEDriverServer.exe");
 		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
@@ -51,12 +58,14 @@ public class WebDriverFactory {
 		return new InternetExplorerDriver();
 	}
 
-	public static void close() {
+	private static synchronized void close() {
+
 		try {
 			getCurrentDriver().quit();
-			currentDriver = null;
-		} catch (UnreachableBrowserException e) {
+		} catch (Throwable e) {
 		}
+
+		currentDriver = null;
 	}
 
 	private static class BrowserCleanup implements Runnable {
